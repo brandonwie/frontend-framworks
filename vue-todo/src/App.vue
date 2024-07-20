@@ -1,47 +1,41 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive, ref } from "vue";
+import TodoItem from "./components/TodoItem.vue";
+import { onMounted } from "vue";
+
+const inputRef = ref(null);
+
+const data = reactive({
+  todos: ["first item"],
+});
+
+const handleAddTodo = () => {
+  const value = inputRef.value.value.trim();
+  if (value) {
+    data.todos.push(value);
+    inputRef.value.value = "";
+    inputRef.value.focus();
+  }
+};
+
+onMounted(() => {
+  inputRef.value.focus();
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <section id="todo">
+    <h1>Todos</h1>
+    <input type="text" ref="inputRef" @keyup.enter="handleAddTodo" />
+    <ul>
+      <TodoItem v-for="(todo, index) in data.todos" :key="index" :todo="todo" />
+    </ul>
+    <button @click="handleAddTodo">Add Todo</button>
+  </section>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+p {
+  color: red;
 }
 </style>
