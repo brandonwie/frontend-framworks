@@ -6,7 +6,7 @@ import { onMounted } from "vue";
 const inputRef = ref(null);
 
 const data = reactive({
-  todos: new Map([[0, "Learn Vue 3"]]),
+  todos: new Map([[1, "Learn Vue 3"]]),
 });
 
 const handleAddTodo = () => {
@@ -19,6 +19,10 @@ const handleAddTodo = () => {
   }
 };
 
+const handleRemove = (id) => {
+  data.todos.delete(id);
+};
+
 onMounted(() => {
   inputRef.value.focus();
 });
@@ -29,14 +33,25 @@ onMounted(() => {
     <h1>Todos</h1>
     <input type="text" ref="inputRef" @keyup.enter="handleAddTodo" />
     <ul>
-      <TodoItem v-for="[id, todo] in data.todos" :key="id" :todo="todo" />
+      <TodoItem
+        v-for="([id, todo], index) in data.todos"
+        :key="index"
+        :id="id"
+        :todo="todo"
+        :handleRemove="handleRemove"
+      />
     </ul>
     <button @click="handleAddTodo">Add Todo</button>
   </section>
 </template>
 
 <style>
-p {
-  color: red;
+#todo {
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  padding: 0;
 }
 </style>

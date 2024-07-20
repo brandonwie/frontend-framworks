@@ -4,5 +4,6 @@
   display: flex;
   place-content: center;
   padding: 2rem;
-  background-color: hsl(120, 75%, 25%);
+  /* recommend me a good color for background */
+  background-color: #f2f2f2;
 }
