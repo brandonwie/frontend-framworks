@@ -26,6 +26,11 @@ const handleRemove = (id) => {
 onMounted(() => {
   inputRef.value.focus();
 });
+
+function test() {
+  console.log(arguments);
+}
+test(1, 2, 3);
 </script>
 
 <template>
